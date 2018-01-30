@@ -1,10 +1,6 @@
 %{
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <memory.h>
-#include <string.h>
-#include <zconf.h>
+#include "lc3.h"
 
 #define YYDEBUG 1
 #ifdef YYDEBUG
@@ -248,7 +244,9 @@ type_specifier
 	: VOID
 	| CHAR
 	| SHORT
-	| INT
+	| INT {
+	    $$ = type_specifier_int_type();
+	}
 	| LONG
 	| FLOAT
 	| DOUBLE
@@ -390,7 +388,9 @@ parameter_list
 parameter_declaration
 	: declaration_specifiers declarator
 	| declaration_specifiers abstract_declarator
-	| declaration_specifiers
+	| declaration_specifiers {
+	    // nothing to do currently: $1 = type(int)
+	}
 	;
 
 identifier_list

@@ -22,7 +22,6 @@ ES  (\\(['"\?\\abfnrtv]|[0-7]{1,3}|x[a-fA-F0-9]+))
 WS  [ \t\v\n\f]
 
 %{
-#include <stdio.h>
 #include "y.tab.h"
 
 extern void yyerror(const char *);  /* prints grammar violation message */
