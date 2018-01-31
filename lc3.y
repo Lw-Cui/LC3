@@ -9,6 +9,7 @@
 
 int yylex(void);
 void yyerror(const char *s);
+char *yyget_text(void);
 
 %}
 
@@ -346,7 +347,10 @@ declarator
 	;
 
 direct_declarator
-	: IDENTIFIER
+	: IDENTIFIER {
+	    //TODO
+	    $$ = direct_declarator_ref_var(yyget_text());
+	}
 	| '(' declarator ')'
 	| direct_declarator '[' ']'
 	| direct_declarator '[' '*' ']'

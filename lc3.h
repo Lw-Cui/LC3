@@ -13,6 +13,7 @@
 
 typedef enum {
     TYPE_SPECIFIER,             // basic type: int
+    DIRECT_DECLARATOR,          // variable name: tmp
 } Attribute;
 
 typedef struct {
@@ -24,5 +25,7 @@ Entity *new_entity(Attribute);
 void info(const char *fmt, ...);
 
 Entity *type_specifier_int_type();
+
+Entity *direct_declarator_ref_var(char *);
 
 #endif //LC3_H

@@ -7,7 +7,8 @@ set(LC3_SOURCE_FILES
         driver.c
         lex.yy.c
         y.tab.h y.tab.c
-        lc3.c lc3.h
-        lc3_type.h lc3_type.c)
+        lc3.h lc3.c
+        lc3_var.h lc3_var.c
+        lc3_adt.h lc3_adt.c)
 
 add_executable(LC3 ${LC3_SOURCE_FILES})
