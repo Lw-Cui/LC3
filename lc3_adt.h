@@ -29,5 +29,19 @@ char *str(String *);
 
 String *sprint(char *fmt, ...);
 
+typedef struct String_Node {
+    struct String_Node *prev, *next;
+    String *body;
+} String_Node;
+
+String_Node *make_str_list(String_Node *prev, String *body, String_Node *next);
+
+typedef struct {
+    String_Node *beg, *end;
+} Assembly;
+
+Assembly *make_assembly();
+
+void assembly_push_back(Assembly *, String *);
 
 #endif //LC3_ADT_H

@@ -9,18 +9,25 @@ typedef enum {
 } Data_Type;
 
 typedef struct {
-    Entity *base;
+    Entity base;
     Data_Type rel_type;
 } Type;
 
 Type *new_type(Data_Type);
 
 typedef struct {
-    Entity *base;
+    Entity base;
     Type basic_type;
     String *name;
 } Id;
 
 Id *new_id(char *);
+
+typedef struct {
+    Entity base;
+    long long int val;
+} Const_int;
+
+Const_int *new_const_int(char *);
 
 #endif //LC3_TYPE_H

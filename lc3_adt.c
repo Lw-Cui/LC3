@@ -93,3 +93,25 @@ String *sprint(char *fmt, ...) {
 void vec_pop_back(Vector *vec) {
     vec->len--;
 }
+
+String_Node *make_str_list(String_Node *prev, String *body, String_Node *next) {
+    String_Node *ptr = malloc(sizeof(String_Node));
+    ptr->body = body;
+    ptr->prev = prev;
+    if (prev) prev->next = ptr;
+    ptr->next = next;
+    if (next) next->prev = ptr;
+    return ptr;
+}
+
+Assembly *make_assembly() {
+    Assembly *ptr = malloc(sizeof(Assembly));
+    ptr->beg = make_str_list(NULL, NULL, NULL);
+    ptr->end = make_str_list(ptr->beg, NULL, NULL);
+    return ptr;
+}
+
+void assembly_push_back(Assembly *ptr, String *code) {
+    make_str_list(ptr->end->prev, code, ptr->end);
+}
+

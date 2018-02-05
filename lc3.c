@@ -1,5 +1,6 @@
 #include "lc3.h"
 #include "lc3_var.h"
+#include "lc3_assembly.h"
 
 void info(const char *fmt, ...) {
     va_list ap;
@@ -11,10 +12,9 @@ void info(const char *fmt, ...) {
     va_end(ap);
 }
 
-Entity *new_entity(Attribute attribute) {
-    Entity *entity = MALLOC(Entity);
+void fill_entity(Entity *entity, Attribute attribute) {
     entity->attr = attribute;
-    return entity;
+    entity->assembly = make_assembly();
 }
 
 Entity *type_specifier_int_type() {
@@ -24,6 +24,25 @@ Entity *type_specifier_int_type() {
 
 Entity *direct_declarator_ref_var(char *name) {
     Id *id = new_id(name);
-    return (Entity*)id;
+    return (Entity *) id;
 }
 
+Entity *constant_int(char *str) {
+    return (Entity *) new_const_int(str);
+}
+
+Entity *jump_statement_return_expr(Entity *expr) {
+    Entity *entity = new_entity(JUMP_STATEMENT);
+    // TODO: what if other expr is returned?
+    if (expr->attr == INT_CONSTANT) {
+        Const_int *const_int = (Const_int *) expr;
+        assembly_push_back(entity->assembly, make_string("Hello world"));
+    }
+    return entity;
+}
+
+Entity *new_entity(Attribute attr) {
+    Entity *entity = MALLOC(Entity);
+    fill_entity(entity, attr);
+    return entity;
+}

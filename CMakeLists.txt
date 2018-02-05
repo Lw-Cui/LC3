@@ -9,6 +9,7 @@ set(LC3_SOURCE_FILES
         y.tab.h y.tab.c
         lc3.h lc3.c
         lc3_var.h lc3_var.c
-        lc3_adt.h lc3_adt.c)
+        lc3_adt.h lc3_adt.c
+        lc3_assembly.h lc3_assembly.c)
 
 add_executable(LC3 ${LC3_SOURCE_FILES})

@@ -35,14 +35,19 @@ char *yyget_text(void);
 
 primary_expression
 	: IDENTIFIER
-	| constant
+	| constant {
+	    // nothing to do
+	}
 	| string
 	| '(' expression ')'
 	| generic_selection
 	;
 
 constant
-	: I_CONSTANT		/* includes character_constant */
+	: I_CONSTANT {
+		// includes character_constant
+		$$ = constant_int(yyget_text());
+	}
 	| F_CONSTANT
 	| ENUMERATION_CONSTANT	/* after it has been defined as such */
 	;
@@ -71,7 +76,9 @@ generic_association
 	;
 
 postfix_expression
-	: primary_expression
+	: primary_expression {
+	    // nothing to do
+	}
 	| postfix_expression '[' expression ']'
 	| postfix_expression '(' ')'
 	| postfix_expression '(' argument_expression_list ')'
@@ -89,7 +96,9 @@ argument_expression_list
 	;
 
 unary_expression
-	: postfix_expression
+	: postfix_expression {
+	    // nothing to do
+	}
 	| INC_OP unary_expression
 	| DEC_OP unary_expression
 	| unary_operator cast_expression
@@ -108,31 +117,41 @@ unary_operator
 	;
 
 cast_expression
-	: unary_expression
+	: unary_expression {
+	    // nothing to do
+	}
 	| '(' type_name ')' cast_expression
 	;
 
 multiplicative_expression
-	: cast_expression
+	: cast_expression {
+	    // nothing to do
+	}
 	| multiplicative_expression '*' cast_expression
 	| multiplicative_expression '/' cast_expression
 	| multiplicative_expression '%' cast_expression
 	;
 
 additive_expression
-	: multiplicative_expression
+	: multiplicative_expression {
+	    // nothing to do
+	}
 	| additive_expression '+' multiplicative_expression
 	| additive_expression '-' multiplicative_expression
 	;
 
 shift_expression
-	: additive_expression
+	: additive_expression {
+	    // nothing to do
+	}
 	| shift_expression LEFT_OP additive_expression
 	| shift_expression RIGHT_OP additive_expression
 	;
 
 relational_expression
-	: shift_expression
+	: shift_expression {
+	    // nothing to do
+	}
 	| relational_expression '<' shift_expression
 	| relational_expression '>' shift_expression
 	| relational_expression LE_OP shift_expression
@@ -140,43 +159,59 @@ relational_expression
 	;
 
 equality_expression
-	: relational_expression
+	: relational_expression {
+	    // nothing to do
+	}
 	| equality_expression EQ_OP relational_expression
 	| equality_expression NE_OP relational_expression
 	;
 
 and_expression
-	: equality_expression
+	: equality_expression {
+	    // nothing to do
+	}
 	| and_expression '&' equality_expression
 	;
 
 exclusive_or_expression
-	: and_expression
+	: and_expression {
+	    // nothing to do
+	}
 	| exclusive_or_expression '^' and_expression
 	;
 
 inclusive_or_expression
-	: exclusive_or_expression
+	: exclusive_or_expression {
+	    // nothing to do
+	}
 	| inclusive_or_expression '|' exclusive_or_expression
 	;
 
 logical_and_expression
-	: inclusive_or_expression
+	: inclusive_or_expression {
+	    // nothing to do
+	}
 	| logical_and_expression AND_OP inclusive_or_expression
 	;
 
 logical_or_expression
-	: logical_and_expression
+	: logical_and_expression {
+	    // nothing to do
+	}
 	| logical_or_expression OR_OP logical_and_expression
 	;
 
 conditional_expression
-	: logical_or_expression
+	: logical_or_expression {
+	    // nothing to do
+	}
 	| logical_or_expression '?' expression ':' conditional_expression
 	;
 
 assignment_expression
-	: conditional_expression
+	: conditional_expression {
+	    // nothing to do
+	}
 	| unary_expression assignment_operator assignment_expression
 	;
 
@@ -195,7 +230,9 @@ assignment_operator
 	;
 
 expression
-	: assignment_expression
+	: assignment_expression {
+	    // nothing to do
+	}
 	| expression ',' assignment_expression
 	;
 
@@ -343,12 +380,13 @@ alignment_specifier
 
 declarator
 	: pointer direct_declarator
-	| direct_declarator
+	| direct_declarator {
+	    // nothing to do currently: $1 = Id(string name)
+	}
 	;
 
 direct_declarator
 	: IDENTIFIER {
-	    //TODO
 	    $$ = direct_declarator_ref_var(yyget_text());
 	}
 	| '(' declarator ')'
@@ -523,7 +561,10 @@ jump_statement
 	| CONTINUE ';'
 	| BREAK ';'
 	| RETURN ';'
-	| RETURN expression ';'
+	| RETURN expression ';' {
+	    // TODO
+	    $$ = jump_statement_return_expr($2);
+	}
 	;
 
 translation_unit
