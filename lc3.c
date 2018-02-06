@@ -1,6 +1,7 @@
 #include "lc3.h"
 #include "lc3_var.h"
-#include "lc3_assembly.h"
+#include "lc3_state.h"
+#include "lc3_adt.h"
 
 void info(const char *fmt, ...) {
     va_list ap;
@@ -10,6 +11,16 @@ void info(const char *fmt, ...) {
     fprintf(stderr, "\n========INFO========");
     fprintf(stderr, "\n");
     va_end(ap);
+}
+
+static String *assembly_gen(char *fmt, ...) {
+#define MAXLINE 500
+    char buf[MAXLINE];
+    va_list ap;
+    va_start(ap, fmt);
+    vsnprintf(buf, MAXLINE, fmt, ap);
+    va_end(ap);
+    return make_string(buf);
 }
 
 void fill_entity(Entity *entity, Attribute attribute) {
@@ -36,7 +47,9 @@ Entity *jump_statement_return_expr(Entity *expr) {
     // TODO: what if other expr is returned?
     if (expr->attr == INT_CONSTANT) {
         Const_int *const_int = (Const_int *) expr;
-        assembly_push_back(entity->assembly, make_string("Hello world"));
+        assembly_push_back(
+            entity->assembly,
+            assembly_gen("movq   $%d, %%rax", const_int->val));
     }
     return entity;
 }
@@ -46,3 +59,18 @@ Entity *new_entity(Attribute attr) {
     fill_entity(entity, attr);
     return entity;
 }
+
+Entity *translation_unit_output(Entity *entity) {
+    Assembly *assembly = entity->assembly;
+    for (String_Node *cur = assembly->beg->next; cur != assembly->end; cur = cur->next) {
+        fprintf(get_output_file(), "\t%s\n", str(cur->body));
+    }
+    return entity;
+}
+
+Entity *block_item_list_merge(Entity *dest, Entity *src) {
+    dest->assembly->end->prev->next = src->assembly->beg->next;
+    dest->assembly->end = src->assembly->end;
+    return dest;
+}
+

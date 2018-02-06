@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "lc3_state.h"
 
 extern FILE *yyin;
 
@@ -10,6 +11,10 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     yyin = fopen(argv[1], "r");
+
+    char output[50];
+    sprintf(output, "%s.asm", argv[1]);
+    set_output_file(fopen(output, "w"));
 
     yyparse();
 

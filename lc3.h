@@ -38,4 +38,8 @@ Entity *constant_int(char *);
 
 Entity *jump_statement_return_expr(Entity *);
 
+Entity *translation_unit_output(Entity *);
+
+Entity *block_item_list_merge(Entity *, Entity *);
+
 #endif //LC3_H

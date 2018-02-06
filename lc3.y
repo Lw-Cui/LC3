@@ -512,7 +512,9 @@ statement
 	| expression_statement
 	| selection_statement
 	| iteration_statement
-	| jump_statement
+	| jump_statement {
+	    // nothing to do
+	}
 	;
 
 labeled_statement
@@ -523,17 +525,35 @@ labeled_statement
 
 compound_statement
 	: '{' '}'
-	| '{'  block_item_list '}'
+	| compound_statement_namespace_start block_item_list compound_statement_namespace_end {
+	    $$ = $2;
+	}
 	;
 
+compound_statement_namespace_start
+    : '{' {
+        // TODO: symbol table
+    }
+    ;
+
+compound_statement_namespace_end
+    : '}'
+    ;
+
 block_item_list
-	: block_item
-	| block_item_list block_item
+	: block_item {
+	    // nothing to do
+	}
+	| block_item_list block_item {
+        $$ = block_item_list_merge($1, $2);
+	}
 	;
 
 block_item
 	: declaration
-	| statement
+	| statement {
+	    // nothing to do for jump_statement
+	}
 	;
 
 expression_statement
@@ -562,14 +582,18 @@ jump_statement
 	| BREAK ';'
 	| RETURN ';'
 	| RETURN expression ';' {
-	    // TODO
 	    $$ = jump_statement_return_expr($2);
+	    // TODO: jump to exit label
 	}
 	;
 
 translation_unit
-	: external_declaration
-	| translation_unit external_declaration
+	: external_declaration {
+        translation_unit_output($1);
+	}
+	| translation_unit external_declaration {
+        translation_unit_output($2);
+	}
 	;
 
 external_declaration
@@ -578,9 +602,16 @@ external_declaration
 	;
 
 function_definition
-	: declaration_specifiers declarator declaration_list compound_statement
-	| declaration_specifiers declarator compound_statement
+	: function_declaration declaration_list compound_statement
+	| function_declaration compound_statement {
+	    // TODO: func call route
+	    $$ = $2;
+	}
 	;
+
+function_declaration
+    : declaration_specifiers declarator
+    ;
 
 declaration_list
 	: declaration
