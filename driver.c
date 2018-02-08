@@ -16,6 +16,8 @@ int main(int argc, char *argv[]) {
     sprintf(output, "%s.asm", argv[1]);
     set_output_file(fopen(output, "w"));
 
+    init_symbol_table();
+
     yyparse();
 
     fclose(yyin);

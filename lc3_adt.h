@@ -44,4 +44,11 @@ Assembly *make_assembly();
 
 void assembly_push_back(Assembly *, String *);
 
+typedef struct Symbol_table {
+    Vector *siblings;
+    struct Symbol_table *parent;
+} Symbol_table;
+
+Symbol_table *make_symbol_table(Symbol_table *);
+
 #endif //LC3_ADT_H

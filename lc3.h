@@ -17,6 +17,8 @@ typedef enum {
     DIRECT_DECLARATOR,          // variable name: tmp
     INT_CONSTANT,               // const int: 0
     JUMP_STATEMENT,             // return a;
+    FUNCTION_DECLARATION,       // function decl: int main()
+    SYMBOL,                     // general symbol
 } Attribute;
 
 typedef struct {
@@ -41,5 +43,13 @@ Entity *jump_statement_return_expr(Entity *);
 Entity *translation_unit_output(Entity *);
 
 Entity *block_item_list_merge(Entity *, Entity *);
+
+Entity *function_definition(Entity *, Entity *);
+
+Entity *function_declaration(Entity *, Entity *);
+
+void enter_new_scope();
+
+void exit_cur_scope();
 
 #endif //LC3_H

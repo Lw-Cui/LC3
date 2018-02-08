@@ -22,3 +22,15 @@ Const_int *new_const_int(char *str) {
     const_int->val = strtol(str, NULL, 10);
     return const_int;
 }
+
+Symbol *make_symbol(Attribute attr, Entity *type, Entity *id) {
+    Symbol *ptr = MALLOC(Symbol);
+    fill_entity(&ptr->base, SYMBOL);
+    ptr->symbol_attr = attr;
+    // TODO: more type
+    if (type->attr == TYPE_SPECIFIER) ptr->type = (Type *) type;
+    if (id->attr == DIRECT_DECLARATOR) ptr->id = (Id *) id;
+    return ptr;
+}
+
+

@@ -1,7 +1,6 @@
 #include "lc3.h"
 #include "lc3_var.h"
 #include "lc3_state.h"
-#include "lc3_adt.h"
 
 void info(const char *fmt, ...) {
     va_list ap;

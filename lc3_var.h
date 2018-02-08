@@ -1,7 +1,6 @@
 #ifndef LC3_TYPE_H
 #define LC3_TYPE_H
 
-#include "lc3_adt.h"
 #include "lc3.h"
 
 typedef enum {
@@ -22,6 +21,15 @@ typedef struct {
 } Id;
 
 Id *new_id(char *);
+
+typedef struct {
+    Entity base;
+    Attribute symbol_attr;
+    Type *type;
+    Id *id;
+} Symbol;
+
+Symbol *make_symbol(Attribute attr, Entity *type, Entity *id);
 
 typedef struct {
     Entity base;

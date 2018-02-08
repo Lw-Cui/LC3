@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <stdio.h>
-#include <string.h>
 #include <zconf.h>
 #include "lc3_adt.h"
 
@@ -113,5 +112,12 @@ Assembly *make_assembly() {
 
 void assembly_push_back(Assembly *ptr, String *code) {
     make_str_list(ptr->end->prev, code, ptr->end);
+}
+
+Symbol_table *make_symbol_table(Symbol_table *parent) {
+    Symbol_table *ptr = malloc(sizeof(Symbol_table));
+    ptr->siblings = make_vector();
+    ptr->parent = parent;
+    return ptr;
 }
 

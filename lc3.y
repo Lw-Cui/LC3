@@ -250,7 +250,9 @@ declaration_specifiers
 	: storage_class_specifier declaration_specifiers
 	| storage_class_specifier
 	| type_specifier declaration_specifiers
-	| type_specifier
+	| type_specifier {
+	    // nothing to do
+	}
 	| type_qualifier declaration_specifiers
 	| type_qualifier
 	| function_specifier declaration_specifiers
@@ -532,12 +534,14 @@ compound_statement
 
 compound_statement_namespace_start
     : '{' {
-        // TODO: symbol table
+        enter_new_scope();
     }
     ;
 
 compound_statement_namespace_end
-    : '}'
+    : '}' {
+        exit_cur_scope();
+    }
     ;
 
 block_item_list
@@ -605,12 +609,14 @@ function_definition
 	: function_declaration declaration_list compound_statement
 	| function_declaration compound_statement {
 	    // TODO: func call route
-	    $$ = $2;
+        $$ = function_definition($1, $2);
 	}
 	;
 
 function_declaration
-    : declaration_specifiers declarator
+    : declaration_specifiers declarator {
+        $$ = function_declaration($1, $2);
+    }
     ;
 
 declaration_list
