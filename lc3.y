@@ -242,7 +242,9 @@ constant_expression
 
 declaration
 	: declaration_specifiers ';'
-	| declaration_specifiers init_declarator_list ';'
+	| declaration_specifiers init_declarator_list ';' {
+	    // real function declaration
+	}
 	| static_assert_declaration
 	;
 
@@ -606,16 +608,16 @@ external_declaration
 	;
 
 function_definition
-	: function_declaration declaration_list compound_statement
-	| function_declaration compound_statement {
+	: function_decl_with_def declaration_list compound_statement
+	| function_decl_with_def compound_statement {
 	    // TODO: func call route
         $$ = function_definition($1, $2);
 	}
 	;
 
-function_declaration
+function_decl_with_def
     : declaration_specifiers declarator {
-        $$ = function_declaration($1, $2);
+        $$ = function_decl_with_def($1, $2);
     }
     ;
 

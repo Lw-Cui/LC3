@@ -6,7 +6,7 @@
 #include <memory.h>
 #include <string.h>
 #include <zconf.h>
-#include "lc3_adt.h"
+#include "lc3_global_adt.h"
 
 #define YYSTYPE Entity *
 
@@ -17,8 +17,9 @@ typedef enum {
     DIRECT_DECLARATOR,          // variable name: tmp
     INT_CONSTANT,               // const int: 0
     JUMP_STATEMENT,             // return a;
-    FUNCTION_DECLARATION,       // function decl: int main()
+    FUNCTION_DECL_WITH_DEF,     // part of function decl: int main()
     SYMBOL,                     // general symbol
+    FUNCTION_DEFINITION,        // real function body
 } Attribute;
 
 typedef struct {
@@ -46,7 +47,7 @@ Entity *block_item_list_merge(Entity *, Entity *);
 
 Entity *function_definition(Entity *, Entity *);
 
-Entity *function_declaration(Entity *, Entity *);
+Entity *function_decl_with_def(Entity *, Entity *);
 
 void enter_new_scope();
 

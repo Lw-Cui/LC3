@@ -9,7 +9,7 @@ set(LC3_SOURCE_FILES
         y.tab.h y.tab.c
         lc3.h lc3.c
         lc3_var.h lc3_var.c
-        lc3_adt.h lc3_adt.c
+        lc3_global_adt.h lc3_global_adt.c
         lc3_state.h lc3_state.c
         lc3_func.h lc3_func.c
         )

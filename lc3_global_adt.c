@@ -2,7 +2,7 @@
 #include <memory.h>
 #include <stdio.h>
 #include <zconf.h>
-#include "lc3_adt.h"
+#include "lc3_global_adt.h"
 
 static const int MIN_SIZE = 5;
 
@@ -114,10 +114,17 @@ void assembly_push_back(Assembly *ptr, String *code) {
     make_str_list(ptr->end->prev, code, ptr->end);
 }
 
-Symbol_table *make_symbol_table(Symbol_table *parent) {
+Symbol_table *add_symbol_table_descendant(Symbol_table *parent) {
     Symbol_table *ptr = malloc(sizeof(Symbol_table));
     ptr->siblings = make_vector();
     ptr->parent = parent;
     return ptr;
 }
+
+Assembly *merge_assembly(Assembly *start_as, Assembly *end_as) {
+    start_as->end->prev->next = end_as->beg->next;
+    start_as->end = end_as->end;
+    return start_as;
+}
+
 

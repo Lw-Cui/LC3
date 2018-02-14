@@ -48,7 +48,7 @@ Entity *jump_statement_return_expr(Entity *expr) {
         Const_int *const_int = (Const_int *) expr;
         assembly_push_back(
             entity->assembly,
-            assembly_gen("movq   $%d, %%rax", const_int->val));
+            assembly_gen("\tmovq   $%d, %%rax", const_int->val));
     }
     return entity;
 }
@@ -62,14 +62,13 @@ Entity *new_entity(Attribute attr) {
 Entity *translation_unit_output(Entity *entity) {
     Assembly *assembly = entity->assembly;
     for (String_Node *cur = assembly->beg->next; cur != assembly->end; cur = cur->next) {
-        fprintf(get_output_file(), "\t%s\n", str(cur->body));
+        fprintf(get_output_file(), "%s\n", str(cur->body));
     }
     return entity;
 }
 
 Entity *block_item_list_merge(Entity *dest, Entity *src) {
-    dest->assembly->end->prev->next = src->assembly->beg->next;
-    dest->assembly->end = src->assembly->end;
+    dest->assembly = merge_assembly(dest->assembly, src->assembly);
     return dest;
 }
 

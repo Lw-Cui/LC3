@@ -15,19 +15,19 @@ FILE *get_output_file() {
 static Symbol_table *cur_symbol = NULL;
 
 void init_symbol_table() {
-    cur_symbol = make_symbol_table(NULL);
+    cur_symbol = add_symbol_table_descendant(NULL);
 }
 
 void enter_new_scope() {
-    cur_symbol = make_symbol_table(cur_symbol);
+    cur_symbol = add_symbol_table_descendant(cur_symbol);
 }
 
 void exit_cur_scope() {
     cur_symbol = cur_symbol->parent;
 }
 
-void add_symbol(Entity *symbol) {
-    // TODO: throw error
+void add_to_symbol_table(Entity *symbol) {
+    // TODO: throw error for `else` clause
     //info("add symbol %s", str(((Symbol *)symbol)->id->name));
     if (symbol->attr == SYMBOL)
         vec_push_back(cur_symbol->siblings, (Symbol *) symbol);

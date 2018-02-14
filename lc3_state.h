@@ -9,6 +9,6 @@ FILE *get_output_file();
 
 void init_symbol_table();
 
-void add_symbol(Entity *);
+void add_to_symbol_table(Entity *);
 
 #endif

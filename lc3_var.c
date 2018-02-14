@@ -23,7 +23,7 @@ Const_int *new_const_int(char *str) {
     return const_int;
 }
 
-Symbol *make_symbol(Attribute attr, Entity *type, Entity *id) {
+Symbol *add_symbol_table_node(Attribute attr, Entity *type, Entity *id) {
     Symbol *ptr = MALLOC(Symbol);
     fill_entity(&ptr->base, SYMBOL);
     ptr->symbol_attr = attr;

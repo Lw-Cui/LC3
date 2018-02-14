@@ -29,7 +29,7 @@ typedef struct {
     Id *id;
 } Symbol;
 
-Symbol *make_symbol(Attribute attr, Entity *type, Entity *id);
+Symbol *add_symbol_table_node(Attribute attr, Entity *type, Entity *id);
 
 typedef struct {
     Entity base;
