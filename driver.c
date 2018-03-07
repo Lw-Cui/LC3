@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "lc3_state.h"
+#include "lc3_symtab.h"
 
 extern FILE *yyin;
 

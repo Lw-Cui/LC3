@@ -1,3 +1,6 @@
+/*
+ * This file is for symbol table
+ */
 #ifndef LC3_ASSEMBLY_H
 #define LC3_ASSEMBLY_H
 

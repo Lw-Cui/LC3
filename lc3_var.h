@@ -1,3 +1,6 @@
+/*
+ * This file is for specific struct for variable management.
+ */
 #ifndef LC3_TYPE_H
 #define LC3_TYPE_H
 
@@ -22,6 +25,9 @@ typedef struct {
 
 Id *new_id(char *);
 
+/*
+ * Symbol table node
+ */
 typedef struct {
     Entity base;
     Attribute symbol_attr;
@@ -29,7 +35,7 @@ typedef struct {
     Id *id;
 } Symbol;
 
-Symbol *add_symbol_table_node(Attribute attr, Entity *type, Entity *id);
+Symbol *new_symbol_table_node(Attribute attr, Entity *type, Entity *id);
 
 typedef struct {
     Entity base;

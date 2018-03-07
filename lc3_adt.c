@@ -2,7 +2,7 @@
 #include <memory.h>
 #include <stdio.h>
 #include <zconf.h>
-#include "lc3_global_adt.h"
+#include "lc3_adt.h"
 
 static const int MIN_SIZE = 5;
 
@@ -114,6 +114,9 @@ void assembly_push_back(Assembly *ptr, String *code) {
     make_str_list(ptr->end->prev, code, ptr->end);
 }
 
+/*
+ * Add node into current name space.
+ */
 Symbol_table *add_symbol_table_descendant(Symbol_table *parent) {
     Symbol_table *ptr = malloc(sizeof(Symbol_table));
     ptr->siblings = make_vector();

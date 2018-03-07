@@ -1,5 +1,5 @@
 #include "lc3.h"
-#include "lc3_state.h"
+#include "lc3_symtab.h"
 #include "lc3_var.h"
 
 static FILE *output = NULL;

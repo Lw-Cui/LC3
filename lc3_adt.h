@@ -1,3 +1,6 @@
+/*
+ * This file is for abstract data type used everywhere.
+ */
 #ifndef LC3_ADT_H
 #define LC3_ADT_H
 

@@ -1,3 +1,7 @@
+/*
+ * This file is for global interface for all lc3.
+ */
+
 #ifndef LC3_H
 #define LC3_H
 
@@ -6,7 +10,7 @@
 #include <memory.h>
 #include <string.h>
 #include <zconf.h>
-#include "lc3_global_adt.h"
+#include "lc3_adt.h"
 
 #define YYSTYPE Entity *
 
